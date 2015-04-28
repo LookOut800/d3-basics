@@ -7,6 +7,7 @@ angular.module('soofaApp')
       scope: {},
       link: function(scope, element, attrs) {
         d3Service.d3().then(function(d3) {
+          console.log('hello');
 
           var margin = {top: 20, right: 20, bottom: 30, left: 50},
             width = 600 - margin.left - margin.right,

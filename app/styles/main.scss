@@ -108,3 +108,10 @@ body {
  stroke: steelblue;
  stroke-width: 1.5px;
 }
+.bar {
+  opacity: 0.5;
+}
+.bar:hover {
+  transition: 1000;
+  opacity: 1;
+}
