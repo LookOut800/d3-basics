@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('soofaApp')
-  .directive('barChart', ['d3Service', function(d3Service) {
+  .directive('pieChart', ['d3Service', function(d3Service) {
   return {
     scope: { 'data': '=', 'onClick': '&' },
     restrict: 'E',
@@ -10,15 +10,14 @@ angular.module('soofaApp')
   function link(scope, element) {
     // the d3 bits
     var color = d3.scale.category20();
-    var el = element[0];
-    var width = el.clientWidth;
-    var height = el.clientHeight;
+    var width = 500;
+    var height = 500;
     var min = Math.min(width, height);
     var pie = d3.layout.pie().sort(null);
     var arc = d3.svg.arc()
       .outerRadius(min / 2 * 0.9)
       .innerRadius(min / 2 * 0.5);
-    var svg = d3.select('div').append('svg')
+    var svg = d3.select('pie-chart').append('svg')
       .attr({width: width, height: height})
       .attr("transform", "translate(400, 10)")
       .append('g')

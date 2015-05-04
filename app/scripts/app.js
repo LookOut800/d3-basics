@@ -28,9 +28,9 @@ angular
         templateUrl: 'views/drink.html',
         controller: 'DrinkCtrl'
       })
-      .when('/food', {
-        templateUrl: 'views/food.html',
-        controller: 'FoodCtrl'
+      .when('/pie', {
+        templateUrl: 'views/pie.html',
+        controller: 'PieCtrl'
       })
       .when('/contact', {
         templateUrl: 'views/contact.html'
