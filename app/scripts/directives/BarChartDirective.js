@@ -18,8 +18,9 @@ angular.module('soofaApp')
     var arc = d3.svg.arc()
       .outerRadius(min / 2 * 0.9)
       .innerRadius(min / 2 * 0.5);
-    var svg = d3.select(el).append('svg')
+    var svg = d3.select('div').append('svg')
       .attr({width: width, height: height})
+      .attr("transform", "translate(400, 10)")
       .append('g')
         .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 

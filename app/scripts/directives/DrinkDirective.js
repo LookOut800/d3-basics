@@ -19,7 +19,7 @@ angular.module('soofaApp').directive('drinkChart', ['d3Service', '$window', '$ti
 
       var margin = {top: 20, right: 20, bottom: 30, left: 80},
         width = 700 - margin.left - margin.right,
-        height = 250 - margin.top - margin.bottom,
+        height = 500 - margin.top - margin.bottom,
         color = d3.scale.category20();
 
       var x = d3.scale.ordinal()
@@ -43,7 +43,6 @@ angular.module('soofaApp').directive('drinkChart', ['d3Service', '$window', '$ti
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
       d3.json('https://data.cityofboston.gov/resource/gb6y-34cq.json', function(error, data) {
-        console.log(data);
         data.forEach(function(d){
           var year = ("Year" + d.licenseadddttm.substring(0,4));
           datum[year] += 1;
@@ -57,7 +56,7 @@ angular.module('soofaApp').directive('drinkChart', ['d3Service', '$window', '$ti
 
         svg.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + 5 + ")")
+          .attr("transform", "translate(0," + 460 + ")")
           .call(xAxis);
 
         svg.append("g")
@@ -75,13 +74,13 @@ angular.module('soofaApp').directive('drinkChart', ['d3Service', '$window', '$ti
           .data(dataArray)
           .enter().append("rect")
           .attr("class", "bar")
-          .attr("transform", function(d, i) { return "translate(" + i * width/dataArray.length + ", 0)"; })
           .attr("width", x.rangeBand())
-          .attr('fill', function(d){return color(d)})
           .attr("y", function(d){ return y(d) })
+          .attr("height", function(d){ return height - y(d) })
           .transition()
-          .duration(6000)
-          .attr("height", function(d){ return height - y(d) });
+          .duration(2000)
+          .attr("transform", function(d, i) { return "translate(" + i * width/dataArray.length + ", 0)"; })
+          .attr('fill', 'steelblue');
         });
       });
     }
