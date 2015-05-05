@@ -14,10 +14,16 @@ angular.module('soofaApp').directive('orchardChart', ['d3Service', function(d3Se
 
       var svg = d3.select("orchard-chart").append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+        .attr('class', 'well');
 
       var map = svg.append("g");
       var points = svg.append("g");
+      // var legend = svg.append("g")
+      //     .attr("class","legend")
+      //     .attr("transform","translate(50,30)")
+      //     .style("font-size","12px")
+      //     .call(d3.legend);
 
 
       var projection = d3.geo.mercator()
@@ -27,30 +33,6 @@ angular.module('soofaApp').directive('orchardChart', ['d3Service', function(d3Se
       var path = d3.geo.path()
         .projection(projection)
         .pointRadius(1);
-// tip = d3.tip().html(function(d) { return d; });
-//       var tooltip = svg.append('div')                             // NEW
-//         .attr('class', 'tooltip');                 // NEW
-
-//       tooltip.append('div')                        // NEW
-//         .attr('class', 'label');                   // NEW
-
-//       tooltip.append('div')                        // NEW
-//         .attr('class', 'count');                   // NEW
-
-//       tooltip.append('div')                        // NEW
-//         .attr('class', 'percent');
-
-    // path.on('mouseover', function(d) {           // NEW
-    //    // tooltip.select('.label').html(d);
-    //    console.log();
-    //   // tooltip.select('.count').html(d.data.count);
-    //   // tooltip.select('.percent').html(percent + '%');
-    //   // tooltip.style('display', 'block');                                    // NEW
-    // });                                          // NEW
-
-    // path.on('mouseout', function(d) {            // NEW
-    //   // Code                                    // NEW
-    // });
 
       var gardenMap = function(){
         d3.json("https://data.cityofboston.gov/resource/cr3i-jj7v.json", function(data){
@@ -77,6 +59,7 @@ angular.module('soofaApp').directive('orchardChart', ['d3Service', function(d3Se
             .attr("r", 8)
             .attr('fill', 'rgba(21, 103, 0, 0.7)')
             .attr('class', 'circle')
+            // .attr("data-legend",function(d) { return d.site})
             .attr('id', function(d){
             return d.site;
           })

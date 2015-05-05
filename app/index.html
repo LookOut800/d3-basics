@@ -18,19 +18,11 @@
     <!-- endbuild -->
   </head>
   <style type="text/css" media="screen">
-    #special {
-      min-height: 500px;
-    }
-    pie-chart {
-      width: 100px;
-      height: 100px;
-      /*display: block;*/
-      position: absolute;
-/*      svg {
-        width: 50px;
-        height: 50px;
-      }
-*/    }
+  .legend rect {
+  fill:white;
+  stroke:black;
+  opacity:0.8;}
+
   </style>
   <body ng-app="soofaApp">
     <!--[if lt IE 7]>
@@ -99,6 +91,7 @@
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/d3/d3.js"></script>
     <script src="bower_components/topojson/topojson.js"></script>
+    <script src="bower_components/d3-tip/index.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -109,7 +102,8 @@
     <script src="scripts/controllers/DrinkCtrl.js"></script>
 
     <script src="scripts/directives/PieChartDirective.js"></script>
-    <script src="scripts/directives/DrinkDirective.js"></script>
+    <script src="scripts/directives/DrinkBarDirective.js"></script>
+    <script src="scripts/directives/DrinkLineDirective.js"></script>
     <script src="scripts/directives/OrchardDirective.js"></script>
 
     <script src="scripts/services/d3service.js"></script>

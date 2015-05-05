@@ -109,7 +109,7 @@ body {
  stroke-width: 1.5px;
 }
 .bar {
-  opacity: 0.5;
+  opacity: 0.6;
 }
 .bar:hover {
   transition: 1000;
@@ -121,52 +121,23 @@ body {
   stroke: black;
   stroke-width: 1px;
 }
-// div.tooltip {
-//     position: absolute;
-//     text-align: center;
-//     width: 60px;
-//     height: 28px;
-//     padding: 2px;
-//     font: 12px sans-serif;
-//     background: lightsteelblue;
-//     border: 0px;
-//     border-radius: 8px;
-//     pointer-events: none;
-// }
-.tooltip {
-  background: #eee;
-  box-shadow: 0 0 5px #999999;
-  color: #333;
-  display: none;
-  font-size: 12px;
-  left: 130px;
-  padding: 10px;
-  position: absolute;
-  text-align: center;
-  top: 95px;
-  width: 80px;
-  z-index: 10;
-}
-#tooltip {
+div.tooltip {
     position: absolute;
-    width: 200px;
-    height: auto;
-    padding: 10px;
-    background-color: white;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
-    -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
-    box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4);
+    text-align: center;
+    width: 60px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
     pointer-events: none;
 }
-#tooltip.hidden {
-    opacity: 0;
+#special {
+  min-height: 500px;
 }
-#tooltip p {
-    margin: 0;
-    font-family: sans-serif;
-    font-size: 16px;
-    line-height: 20px;
+pie-chart {
+  width: 100px;
+  height: 100px;
+  position: absolute;
 }
