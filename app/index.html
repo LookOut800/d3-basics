@@ -22,15 +22,24 @@
       min-height: 500px;
     }
     bar-chart {
-      width: 100px;
+/*      width: 100px;
       height: 100px;
-      /*display: block;*/
       position: absolute;
-/*      svg {
-        width: 50px;
-        height: 50px;
-      }
-*/    }
+*/  }
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: 60px;
+  height: 12px;
+  padding: 18px;
+  margin-top: 20px;
+  font: 15px sans-serif;
+  background: lightgray;
+  border: solid 1px #aaa;
+  border-radius: 3px;
+  pointer-events: none;
+}
+
   </style>
   <body ng-app="soofaApp">
     <!--[if lt IE 7]>

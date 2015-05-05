@@ -6,7 +6,11 @@ angular.module('soofaApp')
       restrict: 'EA',
       scope: {},
       link: function(scope, element, attrs) {
-        d3Service.d3().then(function(d3) {
+
+      d3Service.d3().then(function(d3) {
+
+      d3.json('https://data.cityofboston.gov/resource/gb6y-34cq.json', function(data) {
+
         var datum = {
           Year2006: 0,
           Year2007: 0,
@@ -18,80 +22,105 @@ angular.module('soofaApp')
           Year2013: 0,
           Year2014: 0
         };
-        var margin = {top: 20, right: 20, bottom: 30, left: 50},
-          width = 600 - margin.left - margin.right,
-          height = 500 - margin.top - margin.bottom;
-
-          var x = d3.scale.ordinal()
-            .rangeRoundBands([0, width], .1);
-
-          var y = d3.scale.linear()
-            .range([height, 0]);
-
-          var xAxis = d3.svg.axis()
-            .scale(x)
-            .orient('bottom');
-
-          var yAxis = d3.svg.axis()
-            .scale(y)
-            .orient('left');
-
-          var parseDate = d3.time.format("%y-%m-%").parse;
-
-          var line = d3.svg.line()
-            .x(function(d) {
-              return x(d);
-            })
-            .y(function(d) {
-              return y(d.y);
-            })
-            .interpolate('linear');
-
-          var svg = d3.select(element[0]).append('svg')
-           .attr('width', width + margin.left + margin.right)
-           .attr('height', height + margin.top + margin.bottom)
-           .append('g')
-           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-
-          d3.json('https://data.cityofboston.gov/resource/gb6y-34cq.json', function(data) {
-            data.forEach(function(d){
+        data.forEach(function(d){
             var year = ("Year" + d.licenseadddttm.substring(0,4));
             datum[year] += 1;
-        });
-        var dataArray = [];
-        for(var o in datum) {
-            dataArray.push(datum[o]);
-        }
-        var plotarray = []
-        function makeplots(array){
-          array.forEach()
-        }
-        // debugger;
-        x.domain(Object.keys(datum));
-        y.domain([0, d3.max(dataArray)]);
-
-          svg.append('g')
-            .attr('class', 'x axis')
-            .attr('transform', 'translate(0,' + height + ')')
-            .call(xAxis);
-
-          svg.append('g')
-            .attr('class', 'y axis')
-            .call(yAxis)
-            .append('text')
-            .attr('transform', 'rotate(-90)')
-            .attr('y', 6)
-            .attr('dy', '.71em')
-            .style('text-anchor', 'end')
-            .text('Number of things');
-
-          svg.append('path')
-            .attr('d', line(datum))
-            .attr('stroke', 'blue')
-            .attr('stroke-width', 2)
-            .attr('fill', 'none');
           });
-        });
-      }};
-    }]);
+          var dataArray = [];
+          for(var o in datum) {
+            dataArray.push(datum[o]);
+          }
+        var plots = d3.range(8).map(function(d){
+              return {x: d + 1, y: dataArray[d]}
+            });
+        var WIDTH = 800,
+            HEIGHT = 400,
+            MARGINS = {
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 50
+            },
+            xRange = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(plots, function(d) {
+              return d.x;
+            }), d3.max(plots, function(d) {
+              return d.x;
+            })]),
+            yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(plots, function(d) {
+              return d.y;
+            }), d3.max(plots, function(d) {
+              return d.y;
+            })]),
+            xAxis = d3.svg.axis()
+              .scale(xRange)
+              .tickValues([0,1,2,3,4,5,6,7,8])
+              .tickSize(5)
+              .tickSubdivide(true),
+            yAxis = d3.svg.axis()
+              .scale(yRange)
+              .tickSize(5)
+              .orient('left')
+              .tickSubdivide(true);
+
+        var svg = d3.select('food-chart').append('svg')
+        .attr('width', WIDTH)
+        .attr('height', HEIGHT);
+        svg.append('svg:g')
+          .attr('class', 'x axis')
+          .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+          .call(xAxis);
+
+        svg.append('svg:g')
+          .attr('class', 'y axis')
+          .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+          .call(yAxis);
+
+        var parseDate = d3.time.format("%y-%m-%d").parse;
+
+        var lineFunc = d3.svg.line()
+          .x(function(d) { return xRange(d.x); })
+          .y(function(d) { return yRange(d.y); })
+          .interpolate('monotone');
+
+        svg.append('svg:path')
+          .attr('d', lineFunc(plots))
+          .attr('stroke', 'steelblue')
+          .attr('stroke-width', 5)
+          .attr('fill', 'none')
+          .on("mouseover", mouseover)
+          .on("mousemove", mousemove)
+          .on("mouseout", mouseout);
+
+        svg.append("text")
+          .attr("class", "y label")
+          .attr("text-anchor", "end")
+          .attr("y", 10)
+          .attr('x', -50)
+          .attr("dy", ".5em")
+          .attr("transform", "rotate(-90)")
+          .text("Number of Permit Issued");
+
+        var div = d3.select("food-chart").append("div")
+          .attr("class", "tooltip")
+          .style("opacity", 1e-6);
+
+        function mouseover() {
+          div.transition()
+            .style("opacity", .8)
+            .attr('fill', 'gray');
+        }
+
+        function mousemove(d) {
+          div.text(d3.event.pageY - HEIGHT)
+            .style("left", (d3.event.pageX - 24) + "px")
+            .style("top", (d3.event.pageY - 20) + "px");
+        }
+
+        function mouseout() {
+          div.transition()
+              .style("opacity", 1e-6);
+        }
+      });
+    });
+  }};
+}]);
