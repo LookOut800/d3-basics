@@ -387,8 +387,7 @@ module.exports = function (grunt) {
           expand: true,
           cwd: '.',
           src: ['bower_components/bootstrap-sass-official/assets/fonts/bootstrap/*',
-          'bower_components/d3/d3.js',
-          'boston_neighborhoods.json'],
+          'bower_components/d3/d3.js'],
           dest: '<%= yeoman.dist %>'
         }]
       },
